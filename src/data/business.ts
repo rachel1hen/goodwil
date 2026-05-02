@@ -13,9 +13,9 @@ export const business = {
   tagline: "Top-rated coaching classes in Hingang T Point, Nagpur",
   shortDescription:
     "Goodwill Academy is a verified and claimed Nagpur coaching institute trusted since 2007 for IIT-JEE, MHT-CET, Class X-XII, CBSE, engineering, degree, and subject tutoring.",
-  phone: "08460513535",
-  phoneDisplay: "08460513535",
-  whatsapp: "918460513535",
+  phone: "7972289433",
+  phoneDisplay: "7972289433",
+  whatsapp: "917972289433",
   email: "admissions@goodwillacademy.in",
   rating: 4.6,
   ratingCount: 235,
