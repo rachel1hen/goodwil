@@ -1,0 +1,94 @@
+---
+import { ArrowRight } from "@lucide/astro";
+import { Image } from "astro:assets";
+import BaseLayout from "../../layouts/BaseLayout.astro";
+import LeadForm from "../../components/LeadForm.astro";
+import { business, courses } from "../../data/business";
+import { breadcrumbSchema, courseSchema, organizationSchema } from "../../utils/schema";
+
+export function getStaticPaths() {
+  return courses.map((course) => ({
+    params: { slug: course.slug },
+    props: { course }
+  }));
+}
+
+const { course } = Astro.props;
+const schema = [
+  organizationSchema(),
+  courseSchema(course),
+  breadcrumbSchema([
+    { label: "Home", href: "/" },
+    { label: "Courses", href: "/courses/iit-jee" },
+    { label: course.label, href: course.route }
+  ])
+];
+---
+
+<BaseLayout
+  title={course.seoTitle}
+  description={course.description}
+  path={course.route}
+  schema={schema}
+>
+  <section class="page-hero course-hero">
+    <div class="container hero-grid">
+      <div>
+        <nav class="breadcrumbs" aria-label="Breadcrumb">
+          <a href="/">Home</a> / <a href="/courses/iit-jee">Courses</a> / <span>{course.label}</span>
+        </nav>
+        <p class="eyebrow">{course.eyebrow}</p>
+        <h1>{course.title}</h1>
+        <p class="lead">{course.heroCopy}</p>
+        <div class="hero-actions">
+          <a class="button green" href={`https://wa.me/${business.whatsapp}?text=${encodeURIComponent(`Hi Goodwill Academy, I want details about ${course.label}.`)}`} target="_blank" rel="noopener noreferrer">
+            Enquire for {course.label}
+            <ArrowRight size={18} />
+          </a>
+          <a class="button light" href="/contact-us">Contact centre</a>
+        </div>
+      </div>
+      <div class="photo-card wide">
+        <Image
+          src={course.image}
+          alt={`${course.label} learning environment at Goodwill Academy Nagpur`}
+          widths={[480, 760, 1040]}
+          sizes="(max-width: 920px) 100vw, 45vw"
+          loading="eager"
+        />
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="container grid two">
+      <div>
+        <p class="eyebrow">Course outcomes</p>
+        <h2>What this program is designed to improve.</h2>
+        <ul class="feature-list">
+          {course.outcomes.map((item) => <li>{item}</li>)}
+        </ul>
+      </div>
+      <div>
+        <p class="eyebrow">Learning focus</p>
+        <h2>Core classroom coverage.</h2>
+        <ul class="feature-list">
+          {course.syllabus.map((item) => <li>{item}</li>)}
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <section class="section band">
+    <div class="container grid two">
+      <div class="card">
+        <h3>Why Goodwill Academy for {course.label}?</h3>
+        <p>
+          Students around Hingna T Point can access local coaching without long commute time. The academy has a public {business.rating} rating,
+          is listed as verified and claimed, and has been active since {business.established}.
+        </p>
+      </div>
+      <LeadForm title={`Get ${course.label} batch details`} defaultCourse={course.label} />
+    </div>
+  </section>
+</BaseLayout>

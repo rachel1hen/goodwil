@@ -1,0 +1,32 @@
+---
+import { ArrowRight } from "@lucide/astro";
+import { Image } from "astro:assets";
+
+interface Props {
+  course: {
+    label: string;
+    eyebrow: string;
+    title: string;
+    description: string;
+    route: string;
+    image: ImageMetadata;
+  };
+}
+
+const { course } = Astro.props;
+---
+
+<article class="card course-card">
+  <div class="course-image">
+    <Image src={course.image} alt={`${course.label} classes at Goodwill Academy Nagpur`} loading="lazy" />
+  </div>
+  <div class="course-body">
+    <p class="eyebrow">{course.eyebrow}</p>
+    <h3>{course.label}</h3>
+    <p>{course.description}</p>
+    <a class="button light" href={course.route}>
+      View course
+      <ArrowRight size={17} />
+    </a>
+  </div>
+</article>

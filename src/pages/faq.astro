@@ -1,0 +1,47 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+import LeadForm from "../components/LeadForm.astro";
+import { faqs } from "../data/business";
+import { breadcrumbSchema, faqSchema, organizationSchema } from "../utils/schema";
+
+const schema = [
+  organizationSchema(),
+  faqSchema(faqs),
+  breadcrumbSchema([
+    { label: "Home", href: "/" },
+    { label: "FAQ", href: "/faq" }
+  ])
+];
+---
+
+<BaseLayout
+  title="Goodwill Academy Nagpur FAQs"
+  description="Answers about Goodwill Academy Nagpur courses, fees, location, timings, study material, tests and admissions."
+  path="/faq"
+  schema={schema}
+>
+  <section class="page-hero">
+    <div class="container">
+      <nav class="breadcrumbs" aria-label="Breadcrumb">
+        <a href="/">Home</a> / <span>FAQ</span>
+      </nav>
+      <p class="eyebrow">Admissions help</p>
+      <h1>Goodwill Academy FAQs for students and parents.</h1>
+      <p class="lead">Quick answers for course options, fees, location, timings and enquiry flow.</p>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="container grid two">
+      <div class="faq-list">
+        {faqs.map((item) => (
+          <details>
+            <summary>{item.question}</summary>
+            <p>{item.answer}</p>
+          </details>
+        ))}
+      </div>
+      <LeadForm title="Still have questions?" />
+    </div>
+  </section>
+</BaseLayout>

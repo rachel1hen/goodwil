@@ -1,0 +1,137 @@
+---
+import { ArrowRight, BadgeCheck, BookOpen, MapPin, Star } from "@lucide/astro";
+import { Image } from "astro:assets";
+import BaseLayout from "../layouts/BaseLayout.astro";
+import CourseCard from "../components/CourseCard.astro";
+import LeadForm from "../components/LeadForm.astro";
+import { business, courses, faqs, localAreas, reviews } from "../data/business";
+import { faqSchema, organizationSchema, websiteSchema } from "../utils/schema";
+
+const schema = [organizationSchema(), websiteSchema(), faqSchema(faqs.slice(0, 4))];
+---
+
+<BaseLayout
+  title="Goodwill Academy Nagpur - IIT-JEE, MHT-CET, CBSE and Engineering Coaching"
+  description="Goodwill Academy is a top-rated coaching class in Hingang T Point Nagpur, trusted since 2007 for IIT-JEE, MHT-CET, Class X-XII, CBSE and engineering tutoring."
+  path="/"
+  schema={schema}
+>
+  <section class="hero">
+    <div class="container hero-grid">
+      <div class="hero-copy">
+        <div class="hero-kicker">
+          <span class="pill"><Star size={15} /> {business.rating} from {business.ratingCount} ratings</span>
+          <span class="pill"><BadgeCheck size={15} /> Verified on Justdial</span>
+          <span class="pill"><MapPin size={15} /> Hingna T Point, Nagpur</span>
+        </div>
+        <h1>Top-rated coaching classes in Nagpur for focused students.</h1>
+        <p class="lead">
+          Goodwill Academy has supported students since {business.established} with exam-focused coaching for IIT-JEE,
+          CET/MHT-CET, Class X-XII, CBSE, engineering, diploma, B.Com and subject tutoring near Rachna Ring Road Metro Station.
+        </p>
+        <div class="hero-actions">
+          <a class="button green" href={`https://wa.me/${business.whatsapp}?text=${encodeURIComponent("Hi Goodwill Academy, I want to book a counselling call.")}`} target="_blank" rel="noopener noreferrer">
+            Book counselling
+            <ArrowRight size={18} />
+          </a>
+          <a class="button light" href="/courses/iit-jee">
+            Explore courses
+            <BookOpen size={18} />
+          </a>
+        </div>
+      </div>
+      <div class="hero-media" aria-label="Goodwill Academy classroom photo from Justdial">
+        <div class="hero-photo">
+          <Image
+            src={business.images.hero}
+            alt="Students attending a classroom session at Goodwill Academy Nagpur"
+            widths={[420, 680, 920]}
+            sizes="(max-width: 920px) 100vw, 45vw"
+            loading="eager"
+            fetchpriority="high"
+          />
+        </div>
+        <div class="hero-note">
+          <strong>{business.priceFrom}</strong>
+          <span>fees starting as listed on Justdial</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="metric-row" aria-label="Goodwill Academy trust metrics">
+    <div class="metric"><strong>{business.established}</strong><span>trusted since</span></div>
+    <div class="metric"><strong>{business.rating}</strong><span>Justdial rating</span></div>
+    <div class="metric"><strong>{business.ratingCount}+</strong><span>ratings</span></div>
+    <div class="metric"><strong>7 AM</strong><span>to 9 PM listed hours</span></div>
+  </section>
+
+  <section class="section">
+    <div class="container">
+      <div class="section-head">
+        <p class="eyebrow">Programs</p>
+        <h2>Courses built for boards, entrance exams and college subjects.</h2>
+        <p class="lead">Every course page targets local search intent while keeping the promise practical: concept clarity, regular tests, doubt support and exam discipline.</p>
+      </div>
+      <div class="grid two">
+        {courses.map((course) => <CourseCard course={course} />)}
+      </div>
+    </div>
+  </section>
+
+  <section class="section band">
+    <div class="container split">
+      <div>
+        <p class="eyebrow">Why students choose Goodwill</p>
+        <h2>Local coaching with a disciplined, supportive classroom rhythm.</h2>
+        <ul class="feature-list">
+          <li>Verified and claimed local academy listing with strong public ratings.</li>
+          <li>Convenient Hingna T Point location near Rachna Ring Road Metro Station.</li>
+          <li>Support for school, entrance, engineering, degree and subject tutoring needs.</li>
+          <li>Reviews mention regular tests, doubt solving, study material and personal attention.</li>
+        </ul>
+      </div>
+      <div class="photo-card wide">
+        <Image
+          src={business.images.group}
+          alt="Goodwill Academy students and teachers gathered at the Nagpur centre"
+          widths={[520, 780, 1040]}
+          sizes="(max-width: 920px) 100vw, 50vw"
+          loading="lazy"
+        />
+      </div>
+    </div>
+  </section>
+
+  <section class="section dark">
+    <div class="container">
+      <div class="section-head">
+        <p class="eyebrow">Local SEO coverage</p>
+        <h2>Easy to discover for students searching around Hingna and west Nagpur.</h2>
+      </div>
+      <div class="band-strip">
+        {localAreas.map((area) => <span class="pill">{area}</span>)}
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="container grid two">
+      <div>
+        <div class="section-head">
+          <p class="eyebrow">Student voice</p>
+          <h2>Public reviews point to teaching clarity and consistent support.</h2>
+        </div>
+        <div class="grid">
+          {reviews.map((review) => (
+            <article class="card testimonial">
+              <blockquote>{review.quote}</blockquote>
+              <cite>{review.name} | {review.date}</cite>
+            </article>
+          ))}
+        </div>
+      </div>
+      <LeadForm title="Ask about admission" />
+    </div>
+  </section>
+</BaseLayout>

@@ -1,0 +1,48 @@
+---
+import { ArrowRight } from "@lucide/astro";
+import BaseLayout from "../layouts/BaseLayout.astro";
+import { blogPosts } from "../data/business";
+import { breadcrumbSchema, organizationSchema } from "../utils/schema";
+
+const schema = [
+  organizationSchema(),
+  breadcrumbSchema([
+    { label: "Home", href: "/" },
+    { label: "Blog", href: "/blog" }
+  ])
+];
+---
+
+<BaseLayout
+  title="Goodwill Academy Blog - Nagpur Exam Tips"
+  description="Exam preparation articles for IIT-JEE, MHT-CET, CBSE, Class X-XII and Nagpur students from Goodwill Academy."
+  path="/blog"
+  schema={schema}
+>
+  <section class="page-hero">
+    <div class="container">
+      <nav class="breadcrumbs" aria-label="Breadcrumb">
+        <a href="/">Home</a> / <span>Blog</span>
+      </nav>
+      <p class="eyebrow">Exam guidance</p>
+      <h1>Study strategies for Nagpur students.</h1>
+      <p class="lead">Useful local content gives the site more long-tail SEO reach beyond course pages.</p>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="container grid two">
+      {blogPosts.map((post) => (
+        <article class="card blog-card">
+          <time datetime={post.date}>{new Date(post.date).toLocaleDateString("en-IN", { day: "numeric", month: "long", year: "numeric" })}</time>
+          <h2>{post.title}</h2>
+          <p class="lead">{post.description}</p>
+          <a class="button light" href={`/blog/${post.slug}`}>
+            Read article
+            <ArrowRight size={17} />
+          </a>
+        </article>
+      ))}
+    </div>
+  </section>
+</BaseLayout>

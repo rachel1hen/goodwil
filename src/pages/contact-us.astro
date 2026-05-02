@@ -1,0 +1,66 @@
+---
+import { MapPin, MessageCircle, Phone } from "@lucide/astro";
+import BaseLayout from "../layouts/BaseLayout.astro";
+import LeadForm from "../components/LeadForm.astro";
+import { business } from "../data/business";
+import { breadcrumbSchema, organizationSchema } from "../utils/schema";
+
+const schema = [
+  organizationSchema(),
+  breadcrumbSchema([
+    { label: "Home", href: "/" },
+    { label: "Contact", href: "/contact-us" }
+  ])
+];
+
+const mapSrc = `https://www.google.com/maps?q=${encodeURIComponent(business.mapQuery)}&output=embed`;
+---
+
+<BaseLayout
+  title="Contact Goodwill Academy Nagpur"
+  description="Call, WhatsApp or visit Goodwill Academy at 01 Nilayam Apartment, near Rachna Ring Road Metro Station, Hingna T Point, Nagpur."
+  path="/contact-us"
+  schema={schema}
+>
+  <section class="page-hero">
+    <div class="container">
+      <nav class="breadcrumbs" aria-label="Breadcrumb">
+        <a href="/">Home</a> / <span>Contact</span>
+      </nav>
+      <p class="eyebrow">Visit or enquire</p>
+      <h1>Contact Goodwill Academy in Hingang T Point, Nagpur.</h1>
+      <p class="lead">{business.address}</p>
+      <div class="hero-actions">
+        <a class="button secondary" href={`tel:${business.phone}`}><Phone size={18} /> {business.phoneDisplay}</a>
+        <a class="button green" href={`https://wa.me/${business.whatsapp}`} target="_blank" rel="noopener noreferrer"><MessageCircle size={18} /> WhatsApp</a>
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="container grid two">
+      <div>
+        <div class="card">
+          <h2>Centre details</h2>
+          <ul class="feature-list">
+            <li><strong>Address:</strong> {business.address}</li>
+            <li><strong>Phone:</strong> {business.phoneDisplay}</li>
+            <li><strong>Hours:</strong> 7:00 AM to 9:00 PM as listed on Justdial</li>
+            <li><strong>Fees:</strong> starting at {business.priceFrom}</li>
+          </ul>
+        </div>
+        <div class="map-frame" style="margin-top: 22px;">
+          <iframe src={mapSrc} title="Goodwill Academy Nagpur map" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+        </div>
+      </div>
+      <LeadForm title="Send an admission enquiry" />
+    </div>
+  </section>
+
+  <section class="section band">
+    <div class="container">
+      <p class="eyebrow"><MapPin size={15} /> Nearby search areas</p>
+      <h2>Useful for students near Hingna T Point, Jaitala, Trimurti Nagar, Digdoh and Hingna Road.</h2>
+    </div>
+  </section>
+</BaseLayout>

@@ -1,0 +1,51 @@
+---
+import BaseLayout from "../../layouts/BaseLayout.astro";
+import LeadForm from "../../components/LeadForm.astro";
+import { blogPosts } from "../../data/business";
+import { blogPostingSchema, breadcrumbSchema, organizationSchema } from "../../utils/schema";
+
+export function getStaticPaths() {
+  return blogPosts.map((post) => ({
+    params: { slug: post.slug },
+    props: { post }
+  }));
+}
+
+const { post } = Astro.props;
+const schema = [
+  organizationSchema(),
+  blogPostingSchema(post),
+  breadcrumbSchema([
+    { label: "Home", href: "/" },
+    { label: "Blog", href: "/blog" },
+    { label: post.title, href: `/blog/${post.slug}` }
+  ])
+];
+---
+
+<BaseLayout
+  title={`${post.title} | Goodwill Academy Blog`}
+  description={post.description}
+  path={`/blog/${post.slug}`}
+  schema={schema}
+>
+  <section class="page-hero">
+    <div class="container">
+      <nav class="breadcrumbs" aria-label="Breadcrumb">
+        <a href="/">Home</a> / <a href="/blog">Blog</a> / <span>{post.title}</span>
+      </nav>
+      <p class="eyebrow">{post.tags.join(" / ")}</p>
+      <h1>{post.title}</h1>
+      <p class="lead">{post.description}</p>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="container grid two">
+      <article class="article">
+        {post.body.map((paragraph) => <p>{paragraph}</p>)}
+      </article>
+      <LeadForm title="Discuss your study plan" />
+    </div>
+  </section>
+</BaseLayout>

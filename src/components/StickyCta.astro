@@ -1,0 +1,20 @@
+---
+import { MessageCircle, Phone } from "@lucide/astro";
+import { business } from "../data/business";
+---
+
+<aside class="sticky-cta" aria-label="Quick enquiry actions">
+  <a class="button secondary" href={`tel:${business.phone}`}>
+    <Phone size={17} />
+    Call
+  </a>
+  <a
+    class="button green"
+    href={`https://wa.me/${business.whatsapp}?text=${encodeURIComponent("Hi Goodwill Academy, I want details about admission, fees and batches.")}`}
+    target="_blank"
+    rel="noopener noreferrer"
+  >
+    <MessageCircle size={17} />
+    WhatsApp
+  </a>
+</aside>

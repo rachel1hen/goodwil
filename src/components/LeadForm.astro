@@ -1,0 +1,67 @@
+---
+import { MessageCircle } from "@lucide/astro";
+import { business, courses } from "../data/business";
+
+interface Props {
+  title?: string;
+  defaultCourse?: string;
+}
+
+const { title = "Book a counselling call", defaultCourse = "" } = Astro.props;
+---
+
+<div class="card">
+  <h3>{title}</h3>
+  <p class="lead">Share your details and the form will open WhatsApp with a ready enquiry.</p>
+  <form class="lead-form" data-whatsapp-form>
+    <label>
+      Student name
+      <input name="name" type="text" placeholder="Enter student name" autocomplete="name" required />
+    </label>
+    <label>
+      Phone number
+      <input name="phone" type="tel" placeholder="Enter phone number" autocomplete="tel" required />
+    </label>
+    <label>
+      Course interest
+      <select name="course" required>
+        <option value="">Select a course</option>
+        {courses.map((course) => (
+          <option value={course.label} selected={defaultCourse === course.label}>
+            {course.label}
+          </option>
+        ))}
+      </select>
+    </label>
+    <label>
+      Message
+      <textarea name="message" placeholder="Ask about batch timings, fees, demo class or admission."></textarea>
+    </label>
+    <button class="button green" type="submit">
+      <MessageCircle size={17} />
+      Send on WhatsApp
+    </button>
+    <p class="form-note">No payment is collected on this website. Confirm fees and batch details directly with the academy.</p>
+  </form>
+</div>
+
+<script is:inline define:vars={{ whatsapp: business.whatsapp }}>
+  document.addEventListener("submit", (event) => {
+    const form = event.target;
+    if (!(form instanceof HTMLFormElement) || !form.matches("[data-whatsapp-form]")) {
+      return;
+    }
+
+    event.preventDefault();
+    const data = new FormData(form);
+    const message = [
+      "Hi Goodwill Academy, I want to enquire about admission.",
+      `Student name: ${data.get("name") || ""}`,
+      `Phone: ${data.get("phone") || ""}`,
+      `Course: ${data.get("course") || ""}`,
+      `Message: ${data.get("message") || ""}`
+    ].join("\n");
+
+    window.open(`https://wa.me/${whatsapp}?text=${encodeURIComponent(message)}`, "_blank", "noopener,noreferrer");
+  });
+</script>

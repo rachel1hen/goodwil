@@ -1,0 +1,35 @@
+---
+import { MessageCircle, Phone } from "@lucide/astro";
+import { business, navItems } from "../data/business";
+---
+
+<header class="site-header">
+  <div class="container nav">
+    <a class="brand" href="/" aria-label="Goodwill Academy home">
+      <span class="brand-mark">GW</span>
+      <span>
+        {business.name}
+        <small>Since {business.established} | Nagpur</small>
+      </span>
+    </a>
+    <nav class="nav-links" aria-label="Main navigation">
+      {navItems.map((item) => <a href={item.href}>{item.label}</a>)}
+    </nav>
+    <div class="nav-actions">
+      <a class="button light" href={`tel:${business.phone}`} aria-label="Call Goodwill Academy">
+        <Phone size={17} />
+        Call
+      </a>
+      <a
+        class="button green"
+        href={`https://wa.me/${business.whatsapp}?text=${encodeURIComponent("Hi Goodwill Academy, I want to enquire about classes.")}`}
+        target="_blank"
+        rel="noopener noreferrer"
+        aria-label="Enquire on WhatsApp"
+      >
+        <MessageCircle size={17} />
+        WhatsApp
+      </a>
+    </div>
+  </div>
+</header>

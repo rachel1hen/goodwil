@@ -1,0 +1,91 @@
+---
+import { Image } from "astro:assets";
+import BaseLayout from "../layouts/BaseLayout.astro";
+import LeadForm from "../components/LeadForm.astro";
+import { business } from "../data/business";
+import { breadcrumbSchema, organizationSchema } from "../utils/schema";
+
+const schema = [
+  organizationSchema(),
+  breadcrumbSchema([
+    { label: "Home", href: "/" },
+    { label: "About Goodwill Academy", href: "/about-us" }
+  ])
+];
+---
+
+<BaseLayout
+  title="About Goodwill Academy Nagpur"
+  description="Learn about Goodwill Academy, a verified and top-rated coaching institute in Hingang T Point Nagpur trusted since 2007."
+  path="/about-us"
+  schema={schema}
+>
+  <section class="page-hero">
+    <div class="container">
+      <nav class="breadcrumbs" aria-label="Breadcrumb">
+        <a href="/">Home</a> / <span>About</span>
+      </nav>
+      <p class="eyebrow">Since {business.established}</p>
+      <h1>Goodwill Academy helps Nagpur students prepare with structure and confidence.</h1>
+      <p class="lead">
+        The academy is listed as a verified and claimed business on Justdial, with a {business.rating} rating from {business.ratingCount} public ratings.
+        Its location near Rachna Ring Road Metro Station makes it accessible for students around Hingna T Point and west Nagpur.
+      </p>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="container split">
+      <div class="photo-card tall">
+        <Image
+          src={business.images.classroom}
+          alt="A Goodwill Academy classroom session in Nagpur"
+          widths={[420, 640, 860]}
+          sizes="(max-width: 920px) 100vw, 44vw"
+          loading="lazy"
+        />
+      </div>
+      <div>
+        <p class="eyebrow">Academic approach</p>
+        <h2>Concept clarity first, then practice, correction and revision.</h2>
+        <p class="lead">
+          Goodwill Academy serves students across school, entrance and higher education needs. The listing highlights support for Class X, XI and XII,
+          CBSE, CET, engineering entrance, B.Com, BE, diploma and subject tutoring.
+        </p>
+        <ul class="feature-list">
+          {business.facts.map((fact) => <li>{fact}</li>)}
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <section class="section band">
+    <div class="container grid two">
+      <div class="card">
+        <h3>Proof-safe credibility</h3>
+        <p>
+          The website uses strong conversion copy, but avoids unsupported claims such as guaranteed ranks or invented topper lists.
+          Publicly visible facts from Justdial are used for ratings, address, timings, fees and course categories.
+        </p>
+      </div>
+      <div class="card">
+        <h3>Student support</h3>
+        <p>
+          The Justdial listing and reviews mention a supportive environment, regular tests, doubt-clearing sessions, study material,
+          counselling support and a focus on smaller batches for attention.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="container grid two">
+      <div>
+        <p class="eyebrow">Visit the centre</p>
+        <h2>{business.locality}</h2>
+        <p class="lead">{business.address}</p>
+      </div>
+      <LeadForm title="Plan a centre visit" />
+    </div>
+  </section>
+</BaseLayout>
