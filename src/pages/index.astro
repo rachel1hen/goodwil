@@ -45,8 +45,8 @@ const schema = [organizationSchema(), websiteSchema(), faqSchema(faqs.slice(0, 4
           <Image
             src={business.images.hero}
             alt="Students attending a classroom session at Goodwill Academy Nagpur"
-            widths={[420, 680, 920]}
-            sizes="(max-width: 920px) 100vw, 45vw"
+            widths={[360, 520, 720]}
+            sizes="(max-width: 920px) calc(100vw - 40px), 520px"
             loading="eager"
             fetchpriority="high"
           />

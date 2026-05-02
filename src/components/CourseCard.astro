@@ -18,7 +18,13 @@ const { course } = Astro.props;
 
 <article class="card course-card">
   <div class="course-image">
-    <Image src={course.image} alt={`${course.label} classes at Goodwill Academy Nagpur`} loading="lazy" />
+    <Image
+      src={course.image}
+      alt={`${course.label} classes at Goodwill Academy Nagpur`}
+      widths={[360, 520, 720]}
+      sizes="(max-width: 920px) calc(100vw - 56px), 520px"
+      loading="lazy"
+    />
   </div>
   <div class="course-body">
     <p class="eyebrow">{course.eyebrow}</p>

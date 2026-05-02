@@ -5,7 +5,7 @@ import profSandeep from "../assets/goodwill-academy-prof-sandeep.jpg";
 import admissionPoster from "../assets/goodwill-academy-admission-poster.jpg";
 
 export const siteUrl =
-  import.meta.env.PUBLIC_SITE_URL ?? "https://goodwill-academy-nagpur.example";
+  import.meta.env.PUBLIC_SITE_URL ?? "https://goodwill-zeta.vercel.app";
 
 export const business = {
   name: "Goodwill Academy",
@@ -219,7 +219,7 @@ export const faqs = [
   {
     question: "How can I enquire for admission?",
     answer:
-      "Use the WhatsApp enquiry form on this website or call 08460513535 to ask about batches, fees, counselling, and course availability."
+      `Use the WhatsApp enquiry form on this website or call ${business.phoneDisplay} to ask about batches, fees, counselling, and course availability.`
   }
 ];
 
